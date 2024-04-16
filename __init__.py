@@ -27,12 +27,31 @@ async def async_setup(hass: HomeAssistant, config: dict[str, Any]) -> bool:
         entities = list(map(lambda re: hass.data['cover'].get_entity(re.entity_id), registry_entities))
         
         for entity in entities:
-          res = await entity._device.set_position(position=position, speed=speed)
-          (_LOGGER.info if res else _LOGGER.warn)('set position (%s, %d, %d) result: %s', entity.entity_id, position, speed, res)
+            res = await entity._device.set_position(position=position, speed=speed)
+            (_LOGGER.info if res else _LOGGER.warn)('set position (%s, %d, %d) result: %s', entity.entity_id, position, speed, res)
+            # store result
+            entity._last_run_success = bool(res)
+
+            # refresh state
+            entity._attr_is_opening = entity._device.is_opening()
+            entity._attr_is_closing = entity._device.is_closing()
+            entity.async_write_ha_state()
 
     hass.services.async_register(
         domain=DOMAIN,
         service='set_switchbot_position',
+        service_func=handle_set_cover_position,
+        schema=SET_COVER_POSITION_SCHEMA,
+    )
+    hass.services.async_register(
+        domain='quietdrift',
+        service='set_switchbot_position',
+        service_func=handle_set_cover_position,
+        schema=SET_COVER_POSITION_SCHEMA,
+    )
+    hass.services.async_register(
+        domain='quietdrift',
+        service='set_switchbot_position_slow',
         service_func=handle_set_cover_position,
         schema=SET_COVER_POSITION_SCHEMA,
     )
