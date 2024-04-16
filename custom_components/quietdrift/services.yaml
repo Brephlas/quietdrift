@@ -1,0 +1,23 @@
+set_switchbot_position:
+  description: Sets cover position with ability to set speed
+  fields:
+    entity_id:
+      description: Entity cover to adjust
+      selector:
+        entity:
+          domain: cover
+          multiple: true
+    speed:
+      description: Slow or fast mode
+      selector:
+        select:
+          options:
+            - 1
+            - 255
+    position:
+      description: Desired position
+      selector:
+        number:
+          min: 0
+          max: 100
+          step: 1
