@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-git clone https://github.com/Brephlas/quietdrift.git -O /config/custom_components/
+git clone https://github.com/Brephlas/quietdrift.git /config/custom_components/
 ```
 
 Add to `configuration.yaml`
