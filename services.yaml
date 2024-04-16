@@ -1,5 +1,5 @@
 set_switchbot_position:
-  description: Sets cover position with ability to set speed
+  description: Sets cover position with ability to set speed (default slow)
   fields:
     entity_id:
       description: Entity cover to adjust
