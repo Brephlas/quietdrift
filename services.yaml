@@ -8,11 +8,12 @@ set_switchbot_position:
           domain: cover
           multiple: true
     speed:
-      description: Slow (1) or fast mode (255)
+      description: QuietDrift (1), silent mode (2) or fast mode (255)
       selector:
         select:
           options:
             - 1
+            - 2
             - 255
       default: 1
     position:
@@ -22,4 +23,3 @@ set_switchbot_position:
           min: 0
           max: 100
           step: 1
-
